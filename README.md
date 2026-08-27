@@ -141,29 +141,6 @@ Includes: legitimate clusters, noise, duplicate names, transliteration variants,
 
 ---
 
-## Demo Script (2 Minutes)
-
-```
-0:00  Load dataset         → graph appears, communities colored
-0:10  Click entity         → Why Flagged panel opens with evidence
-0:25  REFUSE card fires    → wrong match rejected, reason shown
-0:40  Verify chain         → green ✓, flip a byte → chain breaks
-0:55  Show metrics         → F1 score, task timing, custody verification
-```
-
----
-
-## Team
-
-| Role | Track |
-|---|---|
-| Cybersecurity & Intelligence Lead | TRUST layer, hash chain, verify UI |
-| AI/ML Lead | ER scoring, similarity models, evaluation |
-| Backend Engineer | INGEST parsers, Neo4j, APIs |
-| Frontend Engineer | Graph UI, evidence explorer, Cytoscape |
-| Domain Research Lead | Scenarios, schemas, literature |
-| RESOLVE Pipeline Owner | Matching signals, ground truth, P/R/F1 |
-
 ---
 
 ## Problem Statement
