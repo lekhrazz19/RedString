@@ -1,0 +1,5 @@
+timestamp,sender_account,sender_name,receiver_account,receiver_name,amount,channel,upi_ref
+2026-03-02T10:14:00,SBI ****1188,Sunil Yadav,Kotak ****9021,Salim Sheikh,180000,UPI,428817263551
+2026-03-04T16:40:00,Kotak ****9021,Salim Sheikh,PNB ****7742,Rehana Sheikh,95000,IMPS,IMPS/771203/CR
+2026-03-06T19:22:00,Kotak ****9021,Salim Sheikh,BOB ****5561,Manoj Tiwari,120000,UPI,428990013277
+2026-03-08T12:05:00,PNB ****7742,Rehana Sheikh,HDFC ****4471,Rahul Sharma,60000,NEFT,NEFT/AX55210

@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* dark-only operator console palette (zinc base) */
+    --background: 240 6% 6%;
+    --foreground: 0 0% 95%;
+
+    --card: 240 5% 9%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 240 5% 8%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 217 91% 60%; /* electric blue - interactive/selection */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 92%;
+
+    --muted: 240 4% 14%;
+    --muted-foreground: 240 5% 58%;
+
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --string: 0 84% 60%; /* the red string */
+    --string-foreground: 0 0% 100%;
+
+    --border: 240 4% 18%;
+    --input: 240 4% 18%;
+    --ring: 217 91% 60%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    font-size: 13.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-secondary;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+}
+
+/* ---- report screen: restrained Tokyo Night accents (on the dark report card) ---- */
+.report-scroll {
+  --tn-blue: #7aa2f7;
+  --tn-blue-bg: rgba(122, 162, 247, 0.16);
+  --tn-blue-line: rgba(122, 162, 247, 0.38);
+  --tn-cyan: #7dcfff;
+  --tn-purple: #bb9af7;
+  --tn-green: #9ece6a;
+  --tn-red: #f7768e;
+  --tn-orange: #ff9e64;
+  --tn-orange-bg: rgba(255, 158, 100, 0.14);
+  --tn-orange-line: rgba(255, 158, 100, 0.42);
+  --tn-yellow: #e0af68;
+  --tn-comment: #7a83ad;
+  --tn-rule: #2a2e44;
+}
+
+/* ---- print / court-ready report ---- */
+@media print {
+  html,
+  body,
+  #root {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 10.5pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .no-print {
+    display: none !important;
+  }
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  /* neutralise the fixed-height scroll container so content paginates,
+     force colour/background printing, and retune the tokens for white paper */
+  .report-scroll {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+
+    --background: 0 0% 100%;
+    --card: 0 0% 100%;
+    --foreground: 240 12% 12%;
+    --muted-foreground: 240 8% 40%;
+    --border: 240 12% 82%;
+
+    --tn-blue: #2f4fb0;
+    --tn-blue-bg: #e8ecfb;
+    --tn-blue-line: #b7c4ee;
+    --tn-cyan: #16607f;
+    --tn-purple: #5a3ea6;
+    --tn-green: #2f6b1f;
+    --tn-red: #b12048;
+    --tn-orange: #a4521a;
+    --tn-orange-bg: #fcebdf;
+    --tn-orange-line: #eccbb0;
+    --tn-yellow: #8a5a12;
+    --tn-comment: #565b73;
+    --tn-rule: #d6d9e6;
+  }
+  .report-sheet {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+
+  /* pagination hygiene */
+  .report-scroll h1,
+  .report-scroll h2,
+  .report-scroll h3 {
+    break-after: avoid;
+  }
+  .report-scroll thead {
+    display: table-header-group;
+  }
+  .report-scroll tr,
+  .report-item {
+    break-inside: avoid;
+  }
+  .report-part {
+    break-inside: auto;
+  }
+  /* signature rules stay solid black even under the monochrome override */
+  .report-scroll .sig-line {
+    border-color: #000 !important;
+  }
+}
