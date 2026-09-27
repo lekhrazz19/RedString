@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Toaster } from '@/components/ui/sonner'
 import { AppShell } from '@/components/layout/AppShell'
@@ -11,7 +11,7 @@ import { ReportPage } from '@/pages/ReportPage'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <TooltipProvider delayDuration={200}>
         <Routes>
           <Route path="/report/:entityId" element={<ReportPage />} />
@@ -32,6 +32,6 @@ export default function App() {
         </Routes>
         <Toaster />
       </TooltipProvider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
