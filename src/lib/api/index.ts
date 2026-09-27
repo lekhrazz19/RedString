@@ -347,11 +347,13 @@ export async function getReportPayload(entityId: string): Promise<ReportPayload>
     .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
 
   const chain = await buildChain(db.audit as AuditEvent[])
-  const hash_manifest = detail.evidence.map((ev) => ({ artifact: ev.id, hash: '' }))
-  for (let i = 0; i < hash_manifest.length; i += 1) {
-    // hash the record CONTENT, not its id
-    hash_manifest[i].hash = await sha256(JSON.stringify(detail.evidence[i]))
-  }
+  const hash_manifest = await Promise.all(
+    detail.evidence.map(async (ev) => ({
+      artifact: ev.id,
+      // hash the record CONTENT, not its id
+      hash: await sha256(JSON.stringify(ev)),
+    })),
+  )
 
   return {
     generated: new Date().toISOString(),

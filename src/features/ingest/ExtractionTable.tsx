@@ -1,6 +1,5 @@
 import { AlertTriangle } from 'lucide-react'
-import type { Extraction } from './parsers/csv'
-import { CONFIDENCE_THRESHOLD } from './parsers/csv'
+import { CONFIDENCE_THRESHOLD, type Extraction } from './parsers/csv'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'

@@ -1,7 +1,6 @@
 import type { AuditEvent } from '@/lib/api/types'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { formatDateTime, shortHash } from '@/lib/utils'
-import { cn } from '@/lib/utils'
+import { cn, formatDateTime, shortHash } from '@/lib/utils'
 
 export function CustodyTable({
   log,

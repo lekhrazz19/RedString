@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Info, RotateCcw } from 'lucide-react'
 import { Slider } from '@/components/ui/slider'
 import { Button } from '@/components/ui/button'
@@ -10,6 +10,22 @@ import type { EntityDetail } from '@/lib/api'
 import { cn } from '@/lib/utils'
 
 const KEYS = Object.keys(HEURISTIC_WEIGHTS) as HeuristicKey[]
+const WEIGHTS_STORAGE_KEY = 'redstring.heuristicWeights'
+
+function loadStoredWeights(): Record<HeuristicKey, number> {
+  try {
+    const raw = localStorage.getItem(WEIGHTS_STORAGE_KEY)
+    if (!raw) return { ...HEURISTIC_WEIGHTS }
+    const parsed = JSON.parse(raw)
+    const restored = { ...HEURISTIC_WEIGHTS }
+    for (const k of KEYS) {
+      if (typeof parsed[k] === 'number' && Number.isFinite(parsed[k])) restored[k] = parsed[k]
+    }
+    return restored
+  } catch {
+    return { ...HEURISTIC_WEIGHTS }
+  }
+}
 
 export function WhyFlaggedPanel({
   node,
@@ -18,12 +34,24 @@ export function WhyFlaggedPanel({
   node: GraphNode
   fired: EntityDetail['fired']
 }) {
-  const [weights, setWeights] = useState<Record<HeuristicKey, number>>({ ...HEURISTIC_WEIGHTS })
+  const [weights, setWeights] = useState<Record<HeuristicKey, number>>(loadStoredWeights)
   const sub = useMemo(() => node.sub_scores ?? {}, [node])
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(WEIGHTS_STORAGE_KEY, JSON.stringify(weights))
+    } catch {
+      /* private mode / disabled storage — ignore */
+    }
+  }, [weights])
+
   const { adjusted, baseline } = useMemo(() => {
-    const score = (w: Record<HeuristicKey, number>) =>
-      KEYS.reduce((s, k) => s + (sub[k] ?? 0) * w[k], 0) * 10
+    const score = (w: Record<HeuristicKey, number>) => {
+      const totalWeight = KEYS.reduce((s, k) => s + w[k], 0)
+      if (totalWeight <= 0) return 0
+      const raw = KEYS.reduce((s, k) => s + (sub[k] ?? 0) * w[k], 0) / totalWeight
+      return Math.min(10, Math.max(0, raw * 10))
+    }
     return { adjusted: score(weights), baseline: score(HEURISTIC_WEIGHTS) }
   }, [weights, sub])
 

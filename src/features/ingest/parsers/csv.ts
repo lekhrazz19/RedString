@@ -173,9 +173,8 @@ function parseTxn(rows: Record<string, string>[], fileName: string): ParsedInges
     ensurePerson(nodeMap, pt, receiverName)
     if (r.sender_account) {
       const id = accountId(r.sender_account.trim())
-      if (!id.startsWith('ac_ing')) {
-        /* existing */
-      } else nodeMap.set(id, { id, type: 'ACCOUNT', label: r.sender_account.trim(), meta: { owner: pf }, ingested: true })
+      if (id.startsWith('ac_ing'))
+        nodeMap.set(id, { id, type: 'ACCOUNT', label: r.sender_account.trim(), meta: { owner: pf }, ingested: true })
     }
     if (r.receiver_account) {
       const id = accountId(r.receiver_account.trim())

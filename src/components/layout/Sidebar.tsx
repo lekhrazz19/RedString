@@ -49,9 +49,7 @@ export function Sidebar() {
 
       <div className="border-t border-border p-3">
         <p className="text-[10px] leading-relaxed text-muted-foreground">
-          SIH26189 · NCRB Women Safety Division
-          <br />
-          Prototype · synthetic data · human-in-the-loop
+          Prototype · human-in-the-loop
         </p>
       </div>
     </aside>
